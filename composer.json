@@ -1,0 +1,17 @@
+{
+    "name": "dmanners/mage-titans-it",
+    "description": "Workshop for MageTitans IT",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "David Manners",
+            "email": "dmanners87@gmail.com"
+        }
+    ],
+    "require": {
+        "symfony/console": "^3.3",
+        "symfony/serializer": "^3.3",
+        "phpunit/phpunit": "^6.2"
+    }
+}
