@@ -4,7 +4,7 @@ namespace MageTitans\Workshop\Domain\Product;
 
 use MageTitans\Workshop\Domain\Stock\StockInterface;
 
-class Product implements ProductInterface
+final class Product implements ProductInterface
 {
     /**
      * @var string
@@ -50,7 +50,7 @@ class Product implements ProductInterface
     /**
      * @return string
      */
-    public function getSku()
+    public function getSku(): string
     {
         return $this->sku;
     }
@@ -58,7 +58,7 @@ class Product implements ProductInterface
     /**
      * @return string
      */
-    public function getTitle()
+    public function getTitle(): string
     {
         return $this->title;
     }
@@ -66,7 +66,7 @@ class Product implements ProductInterface
     /**
      * @return float
      */
-    public function getPrice()
+    public function getPrice(): float
     {
         return $this->price;
     }
@@ -74,7 +74,7 @@ class Product implements ProductInterface
     /**
      * @return StockInterface
      */
-    public function getStock()
+    public function getStock(): StockInterface
     {
         return $this->stock;
     }

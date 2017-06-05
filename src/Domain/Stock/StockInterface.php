@@ -5,12 +5,12 @@ namespace MageTitans\Workshop\Domain\Stock;
 interface StockInterface
 {
     /**
-     * @return boolean
+     * @return bool
      */
     public function getInStock();
 
     /**
-     * @return integer
+     * @return int
      */
     public function getStockLevel();
 }

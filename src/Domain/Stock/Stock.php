@@ -2,27 +2,27 @@
 
 namespace MageTitans\Workshop\Domain\Stock;
 
-class Stock implements StockInterface
+final class Stock implements StockInterface
 {
     /**
-     * @var boolean
+     * @var bool
      */
     private $inStock;
 
     /**
-     * @var integer
+     * @var int
      */
     private $stockLevel;
 
     /**
      * Stock constructor.
-     * 
+     *
      * @param bool $inStock
      * @param int $stockLevel
      */
     public function __construct(
-        boolean $inStock,
-        integer $stockLevel
+        bool $inStock,
+        int $stockLevel
     )
     {
         $this->inStock = $inStock;
@@ -30,17 +30,17 @@ class Stock implements StockInterface
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
-    public function getInStock()
+    public function getInStock(): bool
     {
         return $this->inStock;
     }
 
     /**
-     * @return integer
+     * @return int
      */
-    public function getStockLevel()
+    public function getStockLevel(): int
     {
         return $this->stockLevel;
     }
