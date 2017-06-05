@@ -26,3 +26,24 @@ Mage Titans Italy workshop 2017 by David Manners
 1. Product design,
 2. CLI,
 3. Serilizer,
+
+## What is a product?
+
+```
+[
+    {
+        "sku": "sample-product-1",
+        "title": "Sample Product1",
+        "instock": true,
+        "stock": 120,
+        "price": 2.30
+    },
+    {
+        "sku": "sample-product-2",
+        "title": "Sample Product",
+        "instock": true,
+        "stock": 120,
+        "price": 2.30
+    }
+]
+```
