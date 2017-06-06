@@ -51,3 +51,8 @@ Mage Titans Italy workshop 2017 by David Manners
     },
 ]
 ```
+
+## Links
+
+https://www.schmengler-se.de/en/2016/12/learn-refactoring-to-framework-independent-code/
+https://www.integer-net.com/isolating-domain-logic-in-magento-customizations/
