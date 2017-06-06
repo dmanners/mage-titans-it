@@ -3,6 +3,7 @@
 namespace MageTitans\Workshop\Domain\Product;
 
 use MageTitans\Workshop\Domain\Stock\Stock;
+use Magento\Framework\Exception\NoSuchEntityException;
 
 class ProductRepository implements ProductRepositoryInterface
 {
@@ -16,13 +17,20 @@ class ProductRepository implements ProductRepositoryInterface
      */
     private $searchCriteria;
 
+    /**
+     * @var \Magento\Catalog\Api\Data\ProductInterface
+     */
+    private $productFactory;
+
     public function __construct(
         \Magento\Catalog\Api\ProductRepositoryInterface $productRepository,
-        \Magento\Framework\Api\SearchCriteriaBuilder $searchCriteria
+        \Magento\Framework\Api\SearchCriteriaBuilder $searchCriteria,
+        \Magento\Catalog\Api\Data\ProductInterface $productFactory
     )
     {
         $this->productRepository = $productRepository;
         $this->searchCriteria = $searchCriteria;
+        $this->productFactory = $productFactory;
     }
 
     /**
@@ -49,27 +57,6 @@ class ProductRepository implements ProductRepositoryInterface
             );
         }
         return $products;
-
-        return [
-            new Product(
-                'sample-product-1',
-                'Sample Product1',
-                2.3,
-                new Stock(
-                    true,
-                    120
-                )
-            ),
-            new Product(
-                'sample-product-2',
-                'Sample Product2',
-                8.25,
-                new Stock(
-                    false,
-                    0
-                )
-            )
-        ];
     }
 
     /**
@@ -79,6 +66,16 @@ class ProductRepository implements ProductRepositoryInterface
      */
     public function save(ProductInterface $product)
     {
-        // TODO: Implement save() method.
+        try {
+            $productToSave = $this->productRepository->get($product->getSku());
+        } catch (NoSuchEntityException $e) {
+            $productToSave = $this->productFactory;
+        }
+        $productToSave->setSku($product->getSku())
+            ->setName($product->getTitle())
+            ->setPrice($product->getPrice());
+        $this->productRepository->save(
+            $productToSave
+        );
     }
 }

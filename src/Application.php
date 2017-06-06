@@ -69,7 +69,8 @@ final class Application extends SymfonyApplication
     {
         return new ProductRepository(
             $this->objectManager->get(\Magento\Catalog\Api\ProductRepositoryInterface\Proxy::class),
-            $this->objectManager->get(\Magento\Framework\Api\SearchCriteriaBuilder::class)
+            $this->objectManager->get(\Magento\Framework\Api\SearchCriteriaBuilder::class),
+            $this->objectManager->get(\Magento\Catalog\Api\Data\ProductInterface::class)
         );
     }
 
