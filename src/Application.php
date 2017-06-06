@@ -16,6 +16,8 @@ use Symfony\Component\Serializer\Serializer;
 use Symfony\Component\Serializer\Encoder\XmlEncoder;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+use Magento\Framework\Console\Cli;
+use Magento\Framework\App\ObjectManager;
 
 final class Application extends SymfonyApplication
 {
@@ -27,10 +29,21 @@ final class Application extends SymfonyApplication
      */
     private $serializer;
 
+    /**
+     * @var Cli
+     */
+    private $coreCliApp;
+
+    /**
+     * @var ObjectManager
+     */
+    private $objectManager;
+
     public function __construct()
     {
         parent::__construct(self::APPLICATION_NAME, self::APPLICATION_VERSION);
         $this->initSerialize();
+        $this->initMagento();
         $this->initCommands();
     }
 
@@ -42,10 +55,28 @@ final class Application extends SymfonyApplication
         $this->serializer = new Serializer($normalizers, $encoders);
     }
 
+    private function initMagento()
+    {
+        $projectRootDir = __DIR__ . '/../../../..';
+        if (file_exists($projectRootDir . '/app/bootstrap.php')) {
+            require $projectRootDir . '/app/bootstrap.php';
+        }
+        $this->coreCliApp    = new Cli();
+        $this->objectManager = ObjectManager::getInstance();
+    }
+
+    private function getProductRepository()
+    {
+        return new ProductRepository(
+            $this->objectManager->get(\Magento\Catalog\Api\ProductRepositoryInterface\Proxy::class),
+            $this->objectManager->get(\Magento\Framework\Api\SearchCriteriaBuilder::class)
+        );
+    }
+
     private function initCommands()
     {
         $exporter = new JsonFilesystemExporter(
-            new ProductRepository(),
+            $this->getProductRepository(),
             new Json($this->serializer),
             new Filesystem()
         );
@@ -53,7 +84,7 @@ final class Application extends SymfonyApplication
             new Export($exporter)
         );
         $importer = new JsonFilesystemImporter(
-            new ProductRepository(),
+            $this->getProductRepository(),
             new Json($this->serializer)
         );
         $this->add(

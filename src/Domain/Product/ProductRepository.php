@@ -7,12 +7,49 @@ use MageTitans\Workshop\Domain\Stock\Stock;
 class ProductRepository implements ProductRepositoryInterface
 {
     /**
+     * @var \Magento\Catalog\Api\ProductRepositoryInterface
+     */
+    private $productRepository;
+
+    /**
+     * @var \Magento\Framework\Api\SearchCriteriaBuilder
+     */
+    private $searchCriteria;
+
+    public function __construct(
+        \Magento\Catalog\Api\ProductRepositoryInterface $productRepository,
+        \Magento\Framework\Api\SearchCriteriaBuilder $searchCriteria
+    )
+    {
+        $this->productRepository = $productRepository;
+        $this->searchCriteria = $searchCriteria;
+    }
+
+    /**
      * @param array $ids
      *
      * @return ProductInterface[]
      */
     public function find(array $ids = [])
     {
+        /** @var \Magento\Framework\Api\SearchResults $results */
+        $results = $this->productRepository->getList($this->searchCriteria->create());
+
+        $products = [];
+
+        foreach ($results->getItems() as $product) {
+            $products[] = new Product(
+                $product->getData('sku'),
+                $product->getData('name'),
+                $product->getData('price'),
+                new Stock(
+                    true,
+                    100
+                )
+            );
+        }
+        return $products;
+
         return [
             new Product(
                 'sample-product-1',
