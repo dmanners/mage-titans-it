@@ -4,11 +4,13 @@ namespace MageTitans\Workshop\Service\Serializer;
 
 use MageTitans\Workshop\Domain\Product\Product;
 use MageTitans\Workshop\Domain\Stock\Stock;
+use MageTitans\Workshop\Service\Serializer\ProductDenormalizer;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Serializer\Serializer;
 use Symfony\Component\Serializer\Encoder\XmlEncoder;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+use Symfony\Component\Serializer\Normalizer\ArrayDenormalizer;
 
 final class JsonTest extends TestCase
 {
@@ -20,7 +22,7 @@ final class JsonTest extends TestCase
     public function setUp()
     {
         $encoders = [new XmlEncoder(), new JsonEncoder()];
-        $normalizers = [new ObjectNormalizer()];
+        $normalizers = [new ProductDenormalizer(), new ObjectNormalizer(), new ArrayDenormalizer()];
 
         $serializer = new Serializer($normalizers, $encoders);
 

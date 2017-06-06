@@ -8,6 +8,7 @@ use MageTitans\Workshop\Domain\Product\ProductRepository;
 use MageTitans\Workshop\Service\Product\JsonFilesystemExporter;
 use MageTitans\Workshop\Service\Product\JsonFilesystemImporter;
 use MageTitans\Workshop\Service\Serializer\Json;
+use MageTitans\Workshop\Service\Serializer\ProductDenormalizer;
 use Symfony\Component\Console\Application as SymfonyApplication;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Serializer\Normalizer\ArrayDenormalizer;
@@ -36,7 +37,7 @@ final class Application extends SymfonyApplication
     private function initSerialize()
     {
         $encoders = [new XmlEncoder(), new JsonEncoder()];
-        $normalizers = [new ObjectNormalizer(), new ArrayDenormalizer()];
+        $normalizers = [new ProductDenormalizer(), new ObjectNormalizer(), new ArrayDenormalizer()];
 
         $this->serializer = new Serializer($normalizers, $encoders);
     }

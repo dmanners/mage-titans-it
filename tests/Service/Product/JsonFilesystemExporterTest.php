@@ -4,19 +4,21 @@ namespace MageTitans\Workshop\Service\Product;
 
 use MageTitans\Workshop\Domain\Product\ProductRepository;
 use MageTitans\Workshop\Service\Serializer\Json;
+use MageTitans\Workshop\Service\Serializer\ProductDenormalizer;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Serializer\Serializer;
 use Symfony\Component\Serializer\Encoder\XmlEncoder;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+use Symfony\Component\Serializer\Normalizer\ArrayDenormalizer;
 
 class JsonFilesystemExporterTest extends TestCase
 {
     public function testExecute()
     {
         $encoders = [new XmlEncoder(), new JsonEncoder()];
-        $normalizers = [new ObjectNormalizer()];
+        $normalizers = [new ProductDenormalizer(), new ObjectNormalizer(), new ArrayDenormalizer()];
 
         $serializer = new Serializer($normalizers, $encoders);
 
