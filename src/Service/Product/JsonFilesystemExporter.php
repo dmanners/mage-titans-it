@@ -4,8 +4,8 @@ namespace MageTitans\Workshop\Service\Product;
 
 use MageTitans\Workshop\Service\ExporterInterface;
 use MageTitans\Workshop\Domain\Product\ProductRepositoryInterface;
+use MageTitans\Workshop\Service\SerializerInterface;
 use Symfony\Component\Filesystem\Filesystem;
-use Symfony\Component\Serializer\Serializer;
 
 final class JsonFilesystemExporter implements ExporterInterface
 {
@@ -15,7 +15,7 @@ final class JsonFilesystemExporter implements ExporterInterface
     private $productRepository;
 
     /**
-     * @var Serializer
+     * @var SerializerInterface
      */
     private $serializer;
 
@@ -36,7 +36,7 @@ final class JsonFilesystemExporter implements ExporterInterface
 
     public function __construct(
         ProductRepositoryInterface $productRepository,
-        Serializer $serializer,
+        SerializerInterface $serializer,
         Filesystem $filesystem
     )
     {
@@ -53,10 +53,13 @@ final class JsonFilesystemExporter implements ExporterInterface
         $this->identifier = $identifier;
     }
 
+    /**
+     * @throws \Symfony\Component\Filesystem\Exception\IOException
+     */
     public function execute()
     {
         $data = $this->productRepository->find($this->identifier);
-        $jsonContent = $this->serializer->serialize($data, 'json');
+        $jsonContent = $this->serializer->serialize($data);
         $this->filesystem->dumpFile($this->filename, $jsonContent);
     }
 }
