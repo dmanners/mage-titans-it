@@ -23,5 +23,8 @@
         "psr-4": {
             "MageTitans\\Workshop\\": "src"
         }
-    }
+    },
+    "bin": [
+        "bin/workshop"
+    ]
 }
