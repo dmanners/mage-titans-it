@@ -3,7 +3,6 @@
 namespace MageTitans\Workshop\Domain\Product;
 
 use MageTitans\Workshop\Domain\Stock\Stock;
-use MageTitans\Workshop\Domain\Stock\StockInterface;
 
 final class Product implements ProductInterface
 {
