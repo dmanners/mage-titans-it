@@ -3,11 +3,14 @@
 namespace MageTitans\Workshop;
 
 use MageTitans\Workshop\Command\Product\Export;
+use MageTitans\Workshop\Command\Product\Import;
 use MageTitans\Workshop\Domain\Product\ProductRepository;
 use MageTitans\Workshop\Service\Product\JsonFilesystemExporter;
+use MageTitans\Workshop\Service\Product\JsonFilesystemImporter;
 use MageTitans\Workshop\Service\Serializer\Json;
 use Symfony\Component\Console\Application as SymfonyApplication;
 use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Serializer\Normalizer\ArrayDenormalizer;
 use Symfony\Component\Serializer\Serializer;
 use Symfony\Component\Serializer\Encoder\XmlEncoder;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
@@ -33,7 +36,7 @@ final class Application extends SymfonyApplication
     private function initSerialize()
     {
         $encoders = [new XmlEncoder(), new JsonEncoder()];
-        $normalizers = [new ObjectNormalizer()];
+        $normalizers = [new ObjectNormalizer(), new ArrayDenormalizer()];
 
         $this->serializer = new Serializer($normalizers, $encoders);
     }
@@ -47,6 +50,13 @@ final class Application extends SymfonyApplication
         );
         $this->add(
             new Export($exporter)
+        );
+        $importer = new JsonFilesystemImporter(
+            new ProductRepository(),
+            new Json($this->serializer)
+        );
+        $this->add(
+            new Import($importer)
         );
     }
 }
