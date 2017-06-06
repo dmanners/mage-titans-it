@@ -1,6 +1,6 @@
 <?php
 
-namespace MageTitans\Service;
+namespace MageTitans\Workshop\Service;
 
 interface ExporterInterface
 {

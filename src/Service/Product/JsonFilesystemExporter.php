@@ -1,13 +1,13 @@
 <?php
 
-namespace MageTitans\Service\Product;
+namespace MageTitans\Workshop\Service\Product;
 
-use MageTitans\Service\ExporterInterface;
+use MageTitans\Workshop\Service\ExporterInterface;
 use MageTitans\Workshop\Domain\Product\ProductRepositoryInterface;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Serializer\Serializer;
 
-class JsonFilesystemExporter implements ExporterInterface
+final class JsonFilesystemExporter implements ExporterInterface
 {
     /**
      * @var ProductRepositoryInterface

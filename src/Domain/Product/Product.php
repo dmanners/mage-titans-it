@@ -2,6 +2,7 @@
 
 namespace MageTitans\Workshop\Domain\Product;
 
+use MageTitans\Workshop\Domain\Stock\Stock;
 use MageTitans\Workshop\Domain\Stock\StockInterface;
 
 final class Product implements ProductInterface
@@ -22,7 +23,7 @@ final class Product implements ProductInterface
     private $price;
 
     /**
-     * @var StockInterface
+     * @var Stock
      */
     private $stock;
 
@@ -32,13 +33,13 @@ final class Product implements ProductInterface
      * @param string $sku
      * @param string $title
      * @param float $price
-     * @param StockInterface $stock
+     * @param Stock $stock
      */
     public function __construct(
         string $sku,
         string $title,
         float $price,
-        StockInterface $stock
+        Stock $stock
     )
     {
         $this->sku = $sku;
@@ -72,9 +73,9 @@ final class Product implements ProductInterface
     }
 
     /**
-     * @return StockInterface
+     * @return Stock
      */
-    public function getStock(): StockInterface
+    public function getStock(): Stock
     {
         return $this->stock;
     }

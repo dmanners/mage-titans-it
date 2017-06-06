@@ -34,16 +34,20 @@ Mage Titans Italy workshop 2017 by David Manners
     {
         "sku": "sample-product-1",
         "title": "Sample Product1",
-        "instock": true,
-        "stock": 120,
-        "price": 2.30
+        "price": 2.3,
+        "stock": {
+            "inStock": true,
+            "stockLevel": 120
+        }
     },
     {
         "sku": "sample-product-2",
-        "title": "Sample Product",
-        "instock": true,
-        "stock": 120,
-        "price": 2.30
-    }
+        "title": "Sample Product2",
+        "price": 8.25,
+        "stock": {
+            "inStock": false,
+            "stockLevel": 0
+        }
+    },
 ]
 ```
